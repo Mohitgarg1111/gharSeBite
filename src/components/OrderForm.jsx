@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   User, Phone, MapPin, ShoppingBag, Hash,
@@ -7,8 +7,8 @@ import {
 } from 'lucide-react'
 import { menuItems, deliveryTimes } from '../data/menuData'
 
-// ✅ WhatsApp number — update here if it ever changes
-const WHATSAPP_NUMBER = '919878100496'
+// ✅ Business WhatsApp number
+const WHATSAPP_NUMBER = '91919878100496'
 
 const EMPTY_FORM = {
   customerName: '', phone: '', address: '',
@@ -25,14 +25,14 @@ function makeOrderId() {
 function Field({ label, icon: Icon, error, required, children }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-body text-xs font-semibold uppercase tracking-widest text-cream/40 flex items-center gap-1">
+      <label className="font-body text-xs font-semibold uppercase tracking-widest text-warm-gray flex items-center gap-1">
         {label}
         {required && <span className="text-orange-500">*</span>}
       </label>
       <div className="relative group/field">
         {Icon && (
           <div className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 z-10">
-            <Icon className="w-4 h-4 text-cream/25 group-focus-within/field:text-orange-400 transition-colors duration-300" />
+            <Icon className="w-4 h-4 text-warm-gray/50 group-focus-within/field:text-orange-500 transition-colors duration-300" />
           </div>
         )}
         {children}
@@ -44,7 +44,7 @@ function Field({ label, icon: Icon, error, required, children }) {
             initial={{ opacity: 0, y: -6, height: 0 }}
             animate={{ opacity: 1, y: 0,  height: 'auto' }}
             exit={{    opacity: 0, y: -6, height: 0 }}
-            className="flex items-center gap-1.5 font-body text-xs text-red-400"
+            className="flex items-center gap-1.5 font-body text-xs text-red-500"
           >
             <AlertCircle className="w-3 h-3 flex-shrink-0" />
             {error}
@@ -57,13 +57,13 @@ function Field({ label, icon: Icon, error, required, children }) {
 
 const inputCls = (hasError, withIcon = true) =>
   [
-    'w-full font-body text-sm text-cream bg-dark-3 rounded-xl py-3.5 pr-4 transition-all duration-300',
-    'placeholder-cream/20 focus:outline-none',
-    'border focus:ring-0',
+    'w-full font-body text-sm text-espresso bg-white rounded-xl py-3.5 pr-4',
+    'placeholder-warm-gray/40 transition-all duration-300 focus:outline-none',
+    'border',
     withIcon ? 'pl-10' : 'pl-4',
     hasError
-      ? 'border-red-500/40 focus:border-red-400/60 bg-red-500/5'
-      : 'border-white/8 focus:border-orange-500/50 focus:bg-dark-4',
+      ? 'border-red-300 focus:border-red-400 bg-red-50/30 focus:ring-2 focus:ring-red-100'
+      : 'border-parch-4/50 focus:border-orange-400 focus:ring-2 focus:ring-orange-100',
   ].join(' ')
 
 export default function OrderForm({ selectedMeal, setSelectedMeal }) {
@@ -92,8 +92,8 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
     if (!form.selectedMeal)
       e.selectedMeal = 'Please select a meal'
     const qty = parseInt(form.quantity, 10)
-    if (isNaN(qty) || qty < 1)  e.quantity = 'Minimum quantity is 1'
-    if (qty > 20)                e.quantity = 'Maximum 20 servings'
+    if (isNaN(qty) || qty < 1) e.quantity = 'Minimum quantity is 1'
+    if (qty > 20)              e.quantity = 'Maximum 20 servings'
     if (!form.deliveryTime)
       e.deliveryTime = 'Choose a delivery time slot'
     return e
@@ -102,8 +102,8 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
-    if (errors[name])   setErrors(prev => ({ ...prev, [name]: '' }))
-    if (serverError)    setServerError('')
+    if (errors[name])  setErrors(prev => ({ ...prev, [name]: '' }))
+    if (serverError)   setServerError('')
   }
 
   const handleSubmit = async (e) => {
@@ -113,7 +113,6 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
 
     setLoading(true)
 
-    // Build WhatsApp message with all order details
     const message = `
 🍛 *New Order — GharSeBite*
 
@@ -126,8 +125,7 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
 📝 *Instructions:* ${form.specialInstructions || 'None'}
     `.trim()
 
-    const encodedMessage = encodeURIComponent(message)
-    const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`
+    const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 
     setTimeout(() => {
       setLoading(false)
@@ -148,44 +146,52 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
   }
 
   return (
-    <section id="order" className="py-24 md:py-32 bg-dark-1 relative overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-orange-500/20 to-transparent" />
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.06) 0%, transparent 60%)' }}
+    <section
+      id="order"
+      className="py-24 md:py-32 relative overflow-hidden"
+      style={{ background: 'linear-gradient(180deg, #F7EFE1 0%, #FBF6EE 100%)' }}
+    >
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-orange-200 to-transparent" />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse at 70% 0%, rgba(234,88,12,0.06) 0%, transparent 55%)',
+        }}
       />
 
       <div className="relative max-w-xl mx-auto px-5 sm:px-6">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-px w-8 bg-orange-500" />
+            <div className="h-px w-8 bg-orange-400" />
             <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-orange-500">
               Place Your Order
             </span>
           </div>
-          <h2 className="font-display text-4xl sm:text-5xl font-light text-cream leading-tight">
+          <h2 className="font-display text-4xl sm:text-5xl font-light text-espresso leading-tight">
             Order your
             <br />
             <span className="text-gradient-warm italic font-semibold">meal today</span>
           </h2>
-          <p className="font-body text-sm text-cream/40 mt-4">
-            Fill out the form — your order goes straight to our WhatsApp.
+          <p className="font-body text-sm text-warm-gray mt-4 leading-relaxed">
+            Fill the form — your order goes straight to our WhatsApp instantly.
           </p>
         </motion.div>
 
-        {/* Card */}
+        {/* Form card */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          className="glass rounded-3xl border border-white/8 overflow-hidden shadow-premium"
+          transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          className="card-parchment rounded-3xl border-warm shadow-warm-lg overflow-hidden"
         >
           <AnimatePresence mode="wait">
             {/* ── SUCCESS ── */}
@@ -195,36 +201,39 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{    opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="p-8 sm:p-12 flex flex-col items-center text-center"
               >
                 <motion.div
-                  initial={{ scale: 0, rotate: -20 }}
+                  initial={{ scale: 0, rotate: -15 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', damping: 14, stiffness: 200, delay: 0.1 }}
-                  className="w-20 h-20 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center mb-6"
+                  className="w-20 h-20 rounded-full bg-green-100 border border-green-200 flex items-center justify-center mb-6"
                 >
-                  <CheckCircle2 className="w-10 h-10 text-green-400" />
+                  <CheckCircle2 className="w-10 h-10 text-green-500" />
                 </motion.div>
 
-                <h3 className="font-display text-2xl sm:text-3xl font-semibold text-cream mb-2">
+                <h3 className="font-display text-3xl font-semibold text-espresso mb-2">
                   Order Placed! 🎉
                 </h3>
-                <p className="font-body text-sm text-cream/50 mb-6 leading-relaxed">
+                <p className="font-body text-sm text-warm-gray mb-6 leading-relaxed">
                   Your order details were sent to WhatsApp.<br />
                   We'll confirm your delivery shortly.
                 </p>
 
-                <div className="w-full glass-warm rounded-2xl p-4 mb-6">
-                  <p className="font-body text-xs text-cream/30 mb-1">Order Reference</p>
-                  <p className="font-display font-bold text-2xl text-orange-400 tracking-widest">{orderId}</p>
+                <div className="w-full bg-orange-50 border border-orange-200 rounded-2xl p-4 mb-6">
+                  <p className="font-body text-xs text-warm-gray mb-1">Order Reference</p>
+                  <p className="font-display font-bold text-2xl text-orange-600 tracking-widest">
+                    {orderId}
+                  </p>
+                  <p className="font-body text-xs text-warm-gray mt-1">Save this for your records</p>
                 </div>
 
                 
                  <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20I%20just%20placed%20an%20order%20on%20the%20website`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2.5 bg-green-500 hover:bg-green-400 text-obsidian font-body font-bold text-base py-4 rounded-2xl glow-green-sm transition-all duration-300 hover:-translate-y-0.5 mb-4"
+                  className="w-full flex items-center justify-center gap-2.5 bg-green-500 hover:bg-green-600 text-white font-body font-bold text-base py-4 rounded-2xl shadow-green-glow transition-all duration-300 hover:-translate-y-0.5 mb-4"
                 >
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
@@ -236,9 +245,10 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
 
                 <button
                   onClick={handleReset}
-                  className="flex items-center gap-2 text-cream/30 hover:text-cream/60 font-body text-sm transition-colors"
+                  className="flex items-center gap-2 text-warm-gray hover:text-espresso font-body text-sm transition-colors"
                 >
-                  <RefreshCw className="w-3.5 h-3.5" /> Place another order
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  Place another order
                 </button>
               </motion.div>
             ) : (
@@ -253,32 +263,36 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
                 className="p-6 sm:p-8 flex flex-col gap-5"
               >
                 {/* Top bar */}
-                <div className="flex items-center gap-3 pb-5 border-b border-white/5">
-                  <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
-                    <ShoppingBag className="w-5 h-5 text-orange-400" />
+                <div className="flex items-center gap-3 pb-5 border-b border-parch-4/30">
+                  <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
+                    <ShoppingBag className="w-5 h-5 text-orange-500" />
                   </div>
                   <div>
-                    <h3 className="font-display font-semibold text-lg text-cream">Your Order Details</h3>
-                    <p className="font-body text-xs text-cream/30">Fields marked * are required</p>
+                    <h3 className="font-display font-semibold text-xl text-espresso">
+                      Your Order Details
+                    </h3>
+                    <p className="font-body text-xs text-warm-gray">
+                      Fields marked * are required
+                    </p>
                   </div>
                 </div>
 
-                {/* Selected meal chip */}
+                {/* Meal chip */}
                 <AnimatePresence>
                   {selectedMeal && (
                     <motion.div
                       key="chip"
-                      initial={{ opacity: 0, height: 0, y: -10 }}
-                      animate={{ opacity: 1, height: 'auto', y: 0 }}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
                       exit={{    opacity: 0, height: 0 }}
                       className="flex items-center gap-3 glass-warm rounded-xl p-3"
                     >
                       <img src={selectedMeal.image} alt={selectedMeal.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <p className="font-body text-xs text-cream/30">Selected</p>
-                        <p className="font-body font-semibold text-sm text-cream truncate">{selectedMeal.name}</p>
+                        <p className="font-body text-xs text-warm-gray">Selected meal</p>
+                        <p className="font-body font-semibold text-sm text-espresso truncate">{selectedMeal.name}</p>
                       </div>
-                      <span className="font-display font-bold text-orange-400">₹{selectedMeal.price}</span>
+                      <span className="font-display font-bold text-orange-600">₹{selectedMeal.price}</span>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -302,9 +316,9 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
                 <Field label="Selected Meal" icon={ShoppingBag} error={errors.selectedMeal} required>
                   <select name="selectedMeal" value={form.selectedMeal} onChange={handleChange}
                     className={`${inputCls(!!errors.selectedMeal)} appearance-none cursor-pointer`}>
-                    <option value="" className="bg-dark-3">— Choose a meal —</option>
+                    <option value="">— Choose a meal —</option>
                     {menuItems.map(item => (
-                      <option key={item.id} value={item.name} className="bg-dark-3">
+                      <option key={item.id} value={item.name}>
                         {item.name} — ₹{item.price}
                       </option>
                     ))}
@@ -319,9 +333,9 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
                   <Field label="Delivery Slot" icon={Clock} error={errors.deliveryTime} required>
                     <select name="deliveryTime" value={form.deliveryTime} onChange={handleChange}
                       className={`${inputCls(!!errors.deliveryTime)} appearance-none cursor-pointer`}>
-                      <option value="" className="bg-dark-3">— Pick a time —</option>
+                      <option value="">— Pick a time —</option>
                       {deliveryTimes.map(t => (
-                        <option key={t} value={t} className="bg-dark-3">{t}</option>
+                        <option key={t} value={t}>{t}</option>
                       ))}
                     </select>
                   </Field>
@@ -340,7 +354,7 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{    opacity: 0, height: 0 }}
-                      className="flex items-start gap-2 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl p-3 font-body text-sm"
+                      className="flex items-start gap-2 bg-red-50 border border-red-200 text-red-500 rounded-xl p-3 font-body text-sm"
                     >
                       <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                       {serverError}
@@ -352,8 +366,8 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
                   type="submit"
                   disabled={loading}
                   whileHover={!loading ? { scale: 1.02, y: -2 } : {}}
-                  whileTap={!loading ? { scale: 0.98 } : {}}
-                  className="relative overflow-hidden btn-shine mt-2 flex items-center justify-center gap-2.5 w-full bg-orange-500 hover:bg-orange-400 disabled:bg-orange-500/40 disabled:cursor-not-allowed text-obsidian font-body font-bold text-base py-4 rounded-2xl glow-orange-sm transition-all duration-300"
+                  whileTap={!loading  ? { scale: 0.98 } : {}}
+                  className="btn-shine mt-2 flex items-center justify-center gap-2.5 w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white font-body font-bold text-base py-4 rounded-2xl shadow-orange-glow transition-all duration-300"
                 >
                   {loading ? (
                     <>
@@ -371,8 +385,8 @@ export default function OrderForm({ selectedMeal, setSelectedMeal }) {
                   )}
                 </motion.button>
 
-                <p className="text-center font-body text-xs text-cream/20">
-                  Your order will open WhatsApp with all details pre-filled. Just hit Send.
+                <p className="text-center font-body text-xs text-warm-gray">
+                  Your order will open WhatsApp with all details pre-filled. Just hit Send. 💬
                 </p>
               </motion.form>
             )}

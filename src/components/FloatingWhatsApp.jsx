@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 
-const WHATSAPP_URL = 'https://wa.me/919878100496?text=Hi%20I%20just%20placed%20an%20order%20on%20the%20website'
+const WHATSAPP_URL =
+  'https://wa.me/91919878100496?text=Hi%20I%20just%20placed%20an%20order%20on%20the%20website'
 
 export default function FloatingWhatsApp() {
   const [showTooltip, setShowTooltip] = useState(false)
@@ -28,26 +29,26 @@ export default function FloatingWhatsApp() {
         {showTooltip && !dismissed && (
           <motion.div
             key="tip"
-            initial={{ opacity: 0, scale: 0.85, y: 10, originX: 1, originY: 1 }}
+            initial={{ opacity: 0, scale: 0.85, y: 10 }}
             animate={{ opacity: 1, scale: 1,    y: 0  }}
             exit={{    opacity: 0, scale: 0.85, y: 10 }}
-            transition={{ type: 'spring', damping: 20, stiffness: 280 }}
-            className="relative glass border border-green-500/20 rounded-2xl p-3.5 pr-9 max-w-[190px] shadow-premium"
+            transition={{ type: 'spring', damping: 22, stiffness: 280 }}
+            className="relative card-parchment border-warm rounded-2xl p-3.5 pr-9 max-w-[190px] shadow-warm-lg"
           >
             <button
               onClick={dismiss}
-              className="absolute top-2 right-2 text-cream/20 hover:text-cream/50 transition-colors"
+              className="absolute top-2 right-2 text-warm-gray/40 hover:text-warm-gray transition-colors"
             >
               <X className="w-3.5 h-3.5" />
             </button>
-            <p className="font-body text-xs text-cream/60 leading-snug font-medium">
+            <p className="font-body text-xs text-espresso/70 leading-snug font-medium">
               💬 Questions? Chat with us directly on WhatsApp!
             </p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main button */}
+      {/* Button */}
       <motion.a
         href={WHATSAPP_URL}
         target="_blank"
@@ -56,20 +57,19 @@ export default function FloatingWhatsApp() {
         initial={{ scale: 0, opacity: 0, rotate: -180 }}
         animate={{ scale: 1, opacity: 1, rotate: 0 }}
         transition={{ type: 'spring', damping: 16, stiffness: 200, delay: 2 }}
-        whileHover={{ scale: 1.12, y: -3 }}
+        whileHover={{ scale: 1.1, y: -3 }}
         whileTap={{ scale: 0.93 }}
         onClick={dismiss}
-        className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-green-500 flex items-center justify-center glow-green-sm"
+        className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center shadow-green-glow transition-colors duration-300"
       >
-        {/* Dual pulse rings */}
         <motion.span
-          animate={{ scale: [1, 1.6, 1], opacity: [0.4, 0, 0.4] }}
+          animate={{ scale: [1, 1.6, 1], opacity: [0.35, 0, 0.35] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeOut' }}
           className="absolute inset-0 rounded-full bg-green-400"
         />
         <motion.span
-          animate={{ scale: [1, 1.9, 1], opacity: [0.2, 0, 0.2] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeOut', delay: 0.4 }}
+          animate={{ scale: [1, 1.9, 1], opacity: [0.15, 0, 0.15] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeOut', delay: 0.5 }}
           className="absolute inset-0 rounded-full bg-green-400"
         />
         <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7 sm:w-8 sm:h-8 relative z-10">
