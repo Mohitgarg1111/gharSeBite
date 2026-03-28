@@ -2,120 +2,90 @@ import { motion } from 'framer-motion'
 import { MapPin, Leaf, Snowflake, ShieldCheck, Users2 } from 'lucide-react'
 
 const highlights = [
-  {
-    Icon:  MapPin,
-    title: 'Local Delivery Only',
-    desc:  'Serving select areas in your city. Fresh food, short distances, on-time always.',
-    color: 'text-rose-500',
-    bg:    'bg-rose-50',
-  },
-  {
-    Icon:  Leaf,
-    title: 'Made Fresh Daily',
-    desc:  'Every dish is prepared from scratch each morning. No day-old food, ever.',
-    color: 'text-green-600',
-    bg:    'bg-green-50',
-  },
-  {
-    Icon:  Snowflake,
-    title: 'Zero Frozen Food',
-    desc:  "We don't use freezers for meal prep. Just fresh ingredients, fresh every day.",
-    color: 'text-blue-500',
-    bg:    'bg-blue-50',
-  },
-  {
-    Icon:  ShieldCheck,
-    title: 'Hygienic Kitchen',
-    desc:  'Prepared in a well-maintained home kitchen with the highest hygiene standards.',
-    color: 'text-orange-500',
-    bg:    'bg-orange-50',
-  },
-  {
-    Icon:  Users2,
-    title: 'For Everyone',
-    desc:  'Ideal for office lunch, college students, working professionals, and families.',
-    color: 'text-purple-500',
-    bg:    'bg-purple-50',
-  },
+  { Icon: MapPin,     title: 'Local Delivery',    desc: 'Serving select areas. Fresh food, short distances, on-time always.',              color: 'text-rose-400',   bg: 'bg-rose-500/10'   },
+  { Icon: Leaf,       title: 'Made Fresh Daily',  desc: 'Every dish prepared from scratch each morning. No day-old food, ever.',           color: 'text-green-400',  bg: 'bg-green-500/10'  },
+  { Icon: Snowflake,  title: 'Zero Frozen Food',  desc: "No freezers in meal prep. Just fresh ingredients, fresh every single day.",      color: 'text-blue-400',   bg: 'bg-blue-500/10'   },
+  { Icon: ShieldCheck,title: 'Hygienic Kitchen',  desc: 'Prepared in a well-maintained home kitchen with the highest hygiene standards.', color: 'text-orange-400', bg: 'bg-orange-500/10' },
+  { Icon: Users2,     title: 'For Everyone',      desc: 'Ideal for office lunch, college students, working professionals, and families.', color: 'text-purple-400', bg: 'bg-purple-500/10' },
 ]
 
 export default function TrustSection() {
   return (
-    <section className="py-20 md:py-24 bg-charcoal relative overflow-hidden">
-      {/* Dot grid texture */}
-      <div
-        className="absolute inset-0 opacity-5 pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(circle, white 1px, transparent 1px)`,
-          backgroundSize:  '28px 28px',
-        }}
+    <section className="py-24 md:py-32 bg-dark-2 relative overflow-hidden">
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(249,115,22,0.05) 0%, transparent 60%)' }}
       />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent" />
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16"
         >
-          <span className="inline-block font-body text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">
-            Our Promise
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
-            Why thousands trust{' '}
-            <span className="text-orange-400 italic">GharSeBite</span>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-px w-8 bg-orange-500" />
+            <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-orange-500">
+              Our Promise
+            </span>
+          </div>
+          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light text-cream leading-tight">
+            Why thousands trust
+            <br />
+            <span className="text-gradient-warm italic font-semibold">GharSeBite</span>
           </h2>
-          <p className="font-body text-stone-400 max-w-md mx-auto text-base">
-            We're not a startup trying to disrupt food. We're your neighborhood
-            cook who genuinely cares.
-          </p>
         </motion.div>
 
         {/* Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {highlights.map(({ Icon, title, desc, color, bg }, i) => (
             <motion.div
               key={title}
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 group hover:bg-white/8 transition-colors duration-200"
+              transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -6, transition: { duration: 0.3 } }}
+              className="group glass rounded-2xl p-6 border border-white/5 hover:border-white/10 transition-all duration-400"
             >
-              <div className={`w-11 h-11 rounded-xl ${bg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}>
+              <div className={`w-11 h-11 rounded-xl ${bg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                 <Icon className={`w-5 h-5 ${color}`} />
               </div>
-              <h3 className="font-display font-bold text-base text-white mb-2">{title}</h3>
-              <p  className="font-body text-sm text-stone-400 leading-relaxed">{desc}</p>
+              <h3 className="font-display font-semibold text-lg text-cream mb-2">{title}</h3>
+              <p  className="font-body text-sm text-cream/40 leading-relaxed">{desc}</p>
             </motion.div>
           ))}
 
           {/* Wide CTA card */}
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: highlights.length * 0.08, duration: 0.5 }}
-            className="sm:col-span-2 lg:col-span-2 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+            transition={{ delay: highlights.length * 0.08, duration: 0.6 }}
+            className="sm:col-span-2 lg:col-span-2 relative overflow-hidden rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6"
+            style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(251,191,36,0.08) 100%)', border: '1px solid rgba(249,115,22,0.2)' }}
           >
+            {/* Glow */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-orange-500/10 blur-3xl" />
             <div>
-              <h3 className="font-display font-bold text-xl text-white mb-1">
+              <h3 className="font-display font-semibold text-2xl text-cream mb-2">
                 Ready to taste the difference?
               </h3>
-              <p className="font-body text-orange-100 text-sm">
+              <p className="font-body text-sm text-cream/50">
                 Order your first meal and experience real home cooking today.
               </p>
             </div>
-            <button
+            <motion.button
               onClick={() => document.querySelector('#order')?.scrollIntoView({ behavior: 'smooth' })}
-              className="flex-shrink-0 bg-white hover:bg-orange-50 text-orange-600 font-body font-bold text-sm px-6 py-3 rounded-full hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex-shrink-0 relative overflow-hidden btn-shine bg-orange-500 hover:bg-orange-400 text-obsidian font-body font-bold text-sm px-8 py-3.5 rounded-full glow-orange-sm transition-colors duration-300"
             >
               Place an Order →
-            </button>
+            </motion.button>
           </motion.div>
         </div>
       </div>

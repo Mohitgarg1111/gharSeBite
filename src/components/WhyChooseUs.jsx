@@ -5,120 +5,116 @@ import { Heart, Sun, IndianRupee, Clock4 } from 'lucide-react'
 const features = [
   {
     Icon:        Heart,
-    emoji:       '❤️',
+    number:      '01',
     title:       'Made with Care',
     description: 'Every meal is cooked with love in a clean home kitchen — just like your own family would make it.',
-    bg:          'bg-pink-50',
-    iconBg:      'bg-pink-100',
-    iconColor:   'text-pink-500',
-    border:      'border-pink-100',
+    accent:      'from-rose-500/20 to-rose-500/0',
+    iconColor:   'text-rose-400',
+    iconBg:      'bg-rose-500/10',
+    border:      'hover:border-rose-500/20',
   },
   {
     Icon:        Sun,
-    emoji:       '🌅',
+    number:      '02',
     title:       'Freshly Prepared Daily',
     description: 'No frozen food, no preservatives. Every dish is prepared fresh each morning for same-day delivery.',
-    bg:          'bg-orange-50',
-    iconBg:      'bg-orange-100',
-    iconColor:   'text-orange-500',
-    border:      'border-orange-100',
+    accent:      'from-orange-500/20 to-orange-500/0',
+    iconColor:   'text-orange-400',
+    iconBg:      'bg-orange-500/10',
+    border:      'hover:border-orange-500/30',
   },
   {
     Icon:        IndianRupee,
-    emoji:       '💰',
+    number:      '03',
     title:       'Honestly Affordable',
     description: 'Restaurant-quality home food at prices that make sense. No hidden charges, no delivery surprises.',
-    bg:          'bg-green-50',
-    iconBg:      'bg-green-100',
-    iconColor:   'text-green-600',
-    border:      'border-green-100',
+    accent:      'from-green-500/20 to-green-500/0',
+    iconColor:   'text-green-400',
+    iconBg:      'bg-green-500/10',
+    border:      'hover:border-green-500/20',
   },
   {
     Icon:        Clock4,
-    emoji:       '⏰',
+    number:      '04',
     title:       'On-Time Delivery',
     description: 'We respect your lunch breaks and dinner schedules. Your food arrives in the window you choose.',
-    bg:          'bg-blue-50',
-    iconBg:      'bg-blue-100',
-    iconColor:   'text-blue-500',
-    border:      'border-blue-100',
+    accent:      'from-blue-500/20 to-blue-500/0',
+    iconColor:   'text-blue-400',
+    iconBg:      'bg-blue-500/10',
+    border:      'hover:border-blue-500/20',
   },
 ]
 
-const cardVariants = {
-  hidden:  { opacity: 0, y: 40 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay:    i * 0.1,
-      duration: 0.6,
-      ease:     [0.22, 1, 0.36, 1],
-    },
-  }),
-}
-
 export default function WhyChooseUs() {
-  const ref     = useRef(null)
-  const inView  = useInView(ref, { once: true, margin: '-80px' })
+  const ref    = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section className="py-20 md:py-28 bg-white relative overflow-hidden">
-      {/* Soft background radials */}
-      <div
-        className="absolute inset-0 opacity-30 pointer-events-none"
-        style={{
-          backgroundImage: `
-            radial-gradient(circle at 80% 20%, #FFF7ED 0%, transparent 50%),
-            radial-gradient(circle at 20% 80%, #F0FDF4 0%, transparent 50%)
-          `,
-        }}
+    <section className="py-24 md:py-32 bg-dark-1 relative overflow-hidden">
+      {/* Top divider */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-orange-500/20 to-transparent" />
+
+      {/* Background glow */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.05) 0%, transparent 60%)' }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-14"
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16"
         >
-          <span className="inline-block font-body text-xs font-semibold uppercase tracking-widest text-orange-500 mb-3">
-            Why GharSeBite?
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-charcoal mb-4">
-            Food that feels like <span className="italic text-orange-500">home</span>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-px w-8 bg-orange-500" />
+            <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-orange-500">
+              Why GharSeBite
+            </span>
+          </div>
+          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light text-cream leading-tight">
+            Food that feels like
+            <br />
+            <span className="text-gradient-warm italic font-semibold">home</span>
           </h2>
-          <p className="font-body text-stone-500 max-w-md mx-auto text-base leading-relaxed">
-            We're not a restaurant. We're your neighbor who cooks really, really well.
-          </p>
         </motion.div>
 
         {/* Cards */}
-        <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {features.map(({ Icon, emoji, title, description, bg, iconBg, iconColor, border }, i) => (
+        <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {features.map(({ Icon, number, title, description, accent, iconColor, iconBg, border }, i) => (
             <motion.div
               key={title}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              animate={inView ? 'visible' : 'hidden'}
-              whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className={`group relative ${bg} border ${border} rounded-2xl p-6 cursor-default`}
+              initial={{ opacity: 0, y: 48 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -8, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } }}
+              className={`group relative glass rounded-2xl p-6 border border-white/5 ${border} transition-all duration-500 overflow-hidden`}
             >
-              {/* Icon */}
-              <div className={`w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}>
-                <Icon className={`w-5 h-5 ${iconColor}`} />
-              </div>
+              {/* Card accent gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
-              {/* Decorative emoji */}
-              <span className="absolute top-4 right-4 text-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-200 select-none">
-                {emoji}
+              {/* Number */}
+              <span className="absolute top-4 right-5 font-display text-5xl font-bold text-white/[0.04] select-none">
+                {number}
               </span>
 
-              <h3 className="font-display font-bold text-lg text-charcoal mb-2">{title}</h3>
-              <p  className="font-body text-sm text-stone-500 leading-relaxed">{description}</p>
+              {/* Icon */}
+              <motion.div
+                whileHover={{ rotate: 10, scale: 1.1 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+                className={`relative w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center mb-5`}
+              >
+                <Icon className={`w-5 h-5 ${iconColor}`} />
+              </motion.div>
+
+              <h3 className="relative font-display font-semibold text-xl text-cream mb-3 leading-tight">
+                {title}
+              </h3>
+              <p className="relative font-body text-sm text-cream/45 leading-relaxed">
+                {description}
+              </p>
             </motion.div>
           ))}
         </div>
